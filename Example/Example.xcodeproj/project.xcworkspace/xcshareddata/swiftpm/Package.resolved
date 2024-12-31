@@ -1,0 +1,14 @@
+{
+  "pins" : [
+    {
+      "identity" : "wwhightechview",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/William-Weng/WWHighTechView",
+      "state" : {
+        "revision" : "7cd0398cc48b38798f5832bfc513acb489795c67",
+        "version" : "1.0.0"
+      }
+    }
+  ],
+  "version" : 2
+}

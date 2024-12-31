@@ -3,12 +3,13 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 56;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		814DCE422D23E6D000746F63 /* WWHighTechView in Frameworks */ = {isa = PBXBuildFile; productRef = 814DCE412D23E6D000746F63 /* WWHighTechView */; };
 		814DCE452D23E74400746F63 /* WWHighTechView in Frameworks */ = {isa = PBXBuildFile; productRef = 814DCE442D23E74400746F63 /* WWHighTechView */; };
+		815FC2542D23E904005473F8 /* WWHighTechView in Frameworks */ = {isa = PBXBuildFile; productRef = 815FC2532D23E904005473F8 /* WWHighTechView */; };
 		817567FC2CA2C2B400B24577 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817567FB2CA2C2B400B24577 /* AppDelegate.swift */; };
 		817568002CA2C2B400B24577 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 817567FF2CA2C2B400B24577 /* ViewController.swift */; };
 		817568032CA2C2B400B24577 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 817568012CA2C2B400B24577 /* Main.storyboard */; };
@@ -36,6 +37,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				814DCE422D23E6D000746F63 /* WWHighTechView in Frameworks */,
+				815FC2542D23E904005473F8 /* WWHighTechView in Frameworks */,
 				814DCE452D23E74400746F63 /* WWHighTechView in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -133,6 +135,7 @@
 			packageProductDependencies = (
 				814DCE412D23E6D000746F63 /* WWHighTechView */,
 				814DCE442D23E74400746F63 /* WWHighTechView */,
+				815FC2532D23E904005473F8 /* WWHighTechView */,
 			);
 			productName = Example;
 			productReference = 817567F82CA2C2B400B24577 /* Example.app */;
@@ -163,7 +166,7 @@
 			);
 			mainGroup = 817567EF2CA2C2B400B24577;
 			packageReferences = (
-				814DCE432D23E74400746F63 /* XCLocalSwiftPackageReference ".." */,
+				815FC2522D23E904005473F8 /* XCRemoteSwiftPackageReference "WWHighTechView" */,
 			);
 			productRefGroup = 817567F92CA2C2B400B24577 /* Products */;
 			projectDirPath = "";
@@ -429,12 +432,16 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		814DCE432D23E74400746F63 /* XCLocalSwiftPackageReference ".." */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = ..;
+/* Begin XCRemoteSwiftPackageReference section */
+		815FC2522D23E904005473F8 /* XCRemoteSwiftPackageReference "WWHighTechView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/William-Weng/WWHighTechView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
 		};
-/* End XCLocalSwiftPackageReference section */
+/* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		814DCE412D23E6D000746F63 /* WWHighTechView */ = {
@@ -443,6 +450,11 @@
 		};
 		814DCE442D23E74400746F63 /* WWHighTechView */ = {
 			isa = XCSwiftPackageProductDependency;
+			productName = WWHighTechView;
+		};
+		815FC2532D23E904005473F8 /* WWHighTechView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 815FC2522D23E904005473F8 /* XCRemoteSwiftPackageReference "WWHighTechView" */;
 			productName = WWHighTechView;
 		};
 /* End XCSwiftPackageProductDependency section */
