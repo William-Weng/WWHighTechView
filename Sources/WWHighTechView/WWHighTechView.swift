@@ -14,15 +14,17 @@ open class WWHighTechView: UIView {
     @IBOutlet var borderViews: [UIView]!
     @IBOutlet var borderSubViews: [UIView]!
     @IBOutlet var distanceConstraints: [NSLayoutConstraint]!
-
+    
     @IBOutlet weak var containerView: UIView!
+    
+    public weak var delegate: WWHighTechViewDelegate? 
     
     private let transform3DRotation = (start: CATransform3DMakeRotation(CGFloat.pi * 0.48, 0, 1, 0), end: CATransform3DMakeRotation(CGFloat.pi * 0.0, 0, 1, 0))
     
     private var duration: CFTimeInterval = 0.5
     private var repeatFlashCount: Double = 2.0
     
-    private var animationCount = 0
+    private var animationCount: (start: Int, end: Int) = (0, 0)
     private var animationKey: TransitionAnimationKeyPath?
 
     override public init(frame: CGRect) {
@@ -34,13 +36,19 @@ open class WWHighTechView: UIView {
         super.init(coder: aDecoder)
         initSetting()
     }
+    
+    deinit {
+        delegate = nil
+    }
 }
 
 // MARK: - CAAnimationDelegate
 extension WWHighTechView: CAAnimationDelegate {}
 public extension WWHighTechView {
     
-    func animationDidStart(_ anim: CAAnimation) {}
+    func animationDidStart(_ anim: CAAnimation) {
+        animationDidStartAction(anim: anim)
+    }
     
     func animationDidStop(_ anim: CAAnimation, finished flag: Bool) {
         animationDidStopAction(anim: anim, finished: flag)
@@ -118,8 +126,6 @@ private extension WWHighTechView {
         let animation = CAAnimation._basicAnimation(keyPath: keyPath, delegate: self, fromValue: transform3DRotation.start, toValue: transform3DRotation.end, duration: duration)
         
         borderViews.forEach { $0.layer.add(animation, forKey: keyPath.rawValue) }
-        containerView.layer.add(animation, forKey: keyPath.rawValue)
-
         distanceConstraints.forEach { $0.constant = contentView.bounds.height * 0.5 - (borderViews.first?.frame.height ?? 32.0) * 0.5 }
     }
     
@@ -127,38 +133,57 @@ private extension WWHighTechView {
     /// - Parameter duration: CFTimeInterval
     func constraintAnimation(duration: CFTimeInterval) {
         
-        containerView.isHidden = false
+        guard let animationKey = animationKey else { return }
         
+        delegate?.highTechView(self, status: .start(animationKey))
+
+        containerView.isHidden = false
         borderViews.forEach { $0.layer.transform = CATransform3DIdentity }
         distanceConstraints.forEach { $0.constant = 0 }
         
-        UIViewPropertyAnimator(duration: duration, curve: .easeInOut) { [unowned self] in
+        let animator = UIViewPropertyAnimator(duration: duration, curve: .easeInOut) { [unowned self] in
             setNeedsLayout()
             layoutIfNeeded()
-        }.startAnimation()
+        }
+        
+        animator.addCompletion { [unowned self] _ in delegate?.highTechView(self, status: .end(animationKey)) }
+        animator.startAnimation()
     }
     
-    /// 使用animationKey來讓動畫照順序運轉
+    /// 動畫開始時的處理 (第一次才輸出delegate)
+    /// - Parameter anim: CAAnimation
+    func animationDidStartAction(anim: CAAnimation) {
+        
+        guard let animationKey = animationKey else { return }
+        
+        animationCount.start += 1
+        
+        if (animationCount.start == 1) { delegate?.highTechView(self, status: .start(animationKey)); return }
+        if (animationCount.start == borderViews.count) { animationCount.start = 0; return }
+    }
+    
+    /// 使用animationKey來讓動畫照順序運轉 (最後一次才輸出delegate)
     /// - Parameters:
     ///   - anim: CAAnimation
     ///   - finished: Bool
     func animationDidStopAction(anim: CAAnimation, finished: Bool) {
-        
-        if animationKey == nil { return }
-        
+                
+        guard let animationKey = animationKey else { return }
+
         if (finished) {
             
-            animationCount += 1
+            animationCount.end += 1
+            if (animationCount.end != borderViews.count) { return }
             
-            if (animationCount != borderViews.count) { return }
+            delegate?.highTechView(self, status: .end(animationKey))
             
             switch animationKey {
-            case .opacity: transformAnimation(duration: duration); animationKey = .transform
-            case .transform: constraintAnimation(duration: duration); animationKey = nil
-            default: animationKey = nil
+            case .opacity: self.animationKey = .transform; transformAnimation(duration: duration);
+            case .transform: self.animationKey = .constraints; constraintAnimation(duration: duration)
+            default: self.animationKey = nil
             }
             
-            animationCount = 0
+            animationCount.end = 0
         }
     }
     

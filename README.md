@@ -11,7 +11,7 @@
 ### [Installation with Swift Package Manager](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/使用-spm-安裝第三方套件-xcode-11-新功能-2c4ffcf85b4b)
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWHighTechView.git", .upToNextMajor(from: "1.0.1"))
+    .package(url: "https://github.com/William-Weng/WWHighTechView.git", .upToNextMajor(from: "1.0.2"))
 ]
 ```
 
@@ -20,18 +20,36 @@ dependencies: [
 |-|-|
 |start(duration:innerView:repeatFlashCount:highTechColor:)|啟動動畫功能|
 
+### [WWHighTechViewDelegate](https://ezgif.com/video-to-webp)
+|函式|說明|
+|-|-|
+|highTechView(_:status:)|HighTechView的動畫狀態|
+
 ### Example
 ```swift
 import UIKit
+import WWPrint
 import WWHighTechView
 
 final class ViewController: UIViewController {
     
     @IBOutlet weak var testLabel: UILabel!
     @IBOutlet weak var myHighTechTextView: WWHighTechView!
-        
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        myHighTechTextView.delegate = self
+    }
+    
     @IBAction func test(_ sender: UIBarButtonItem) {
         myHighTechTextView.start(innerView: testLabel)
+    }
+}
+
+extension ViewController: WWHighTechViewDelegate {
+    
+    func highTechView(_ highTechView: WWHighTechView, status: WWHighTechView.Status) {
+        wwPrint(status)
     }
 }
 ```
