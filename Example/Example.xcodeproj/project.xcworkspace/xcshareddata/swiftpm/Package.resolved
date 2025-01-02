@@ -5,8 +5,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/William-Weng/WWHighTechView",
       "state" : {
-        "revision" : "092065a0eab505ee74fa3ae025888b37bf65a371",
-        "version" : "1.0.2"
+        "revision" : "381ba4946109a20a8a9e4a04d528d148565f3565",
+        "version" : "1.0.3"
       }
     },
     {
