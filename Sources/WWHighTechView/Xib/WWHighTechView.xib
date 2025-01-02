@@ -10,12 +10,18 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="WWHighTechView" customModule="WWHighTechView">
             <connections>
-                <outlet property="containerView" destination="HHN-N5-yht" id="QCk-uB-8Lq"/>
+                <outlet property="containerView" destination="HHN-N5-yht" id="Hm0-wE-XXF"/>
                 <outlet property="contentView" destination="iN0-l3-epB" id="O15-oI-AS6"/>
                 <outletCollection property="borderViews" destination="4Aq-y6-SPj" collectionClass="NSMutableArray" id="7tZ-BN-p9N"/>
                 <outletCollection property="borderViews" destination="mSB-5F-HZj" collectionClass="NSMutableArray" id="XA8-fz-5wm"/>
                 <outletCollection property="distanceConstraints" destination="5Mc-CR-3dv" collectionClass="NSMutableArray" id="weS-XD-RxB"/>
                 <outletCollection property="distanceConstraints" destination="yfB-kW-Th2" collectionClass="NSMutableArray" id="iux-et-dkE"/>
+                <outletCollection property="borderSubViews" destination="R2F-mH-B6q" collectionClass="NSMutableArray" id="u2V-gq-Po9"/>
+                <outletCollection property="borderSubViews" destination="F3N-WT-deT" collectionClass="NSMutableArray" id="tzt-1K-R7z"/>
+                <outletCollection property="borderSubViews" destination="8Tm-5t-mEu" collectionClass="NSMutableArray" id="4My-NM-kBQ"/>
+                <outletCollection property="borderSubViews" destination="uFy-iQ-oRl" collectionClass="NSMutableArray" id="Ohn-2q-kF3"/>
+                <outletCollection property="borderSubViews" destination="Qm0-mH-pw0" collectionClass="NSMutableArray" id="b2I-d6-NUc"/>
+                <outletCollection property="borderSubViews" destination="rwj-Xt-Ymb" collectionClass="NSMutableArray" id="QOf-d0-ITK"/>
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
@@ -24,7 +30,7 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3TV-gc-UYZ">
-                    <rect key="frame" x="0.0" y="0.0" width="331" height="308"/>
+                    <rect key="frame" x="0.0" y="64" width="331" height="180"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4Aq-y6-SPj">
                             <rect key="frame" x="0.0" y="0.0" width="331" height="32"/>
@@ -60,14 +66,14 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="mSB-5F-HZj">
-                            <rect key="frame" x="0.0" y="276" width="331" height="32"/>
+                            <rect key="frame" x="0.0" y="148" width="331" height="32"/>
                             <subviews>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uFy-iQ-oRl">
                                     <rect key="frame" x="324.66666666666669" y="0.0" width="6.3333333333333144" height="32"/>
                                     <color key="backgroundColor" red="0.4941176471" green="0.98823529409999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qm0-mH-pw0">
-                                    <rect key="frame" x="0.0" y="25.666666666666686" width="331" height="6.3333333333333357"/>
+                                    <rect key="frame" x="0.0" y="25.666666666666657" width="331" height="6.3333333333333321"/>
                                     <color key="backgroundColor" red="0.4941176471" green="0.98823529409999999" blue="0.98039215690000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </view>
                                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rwj-Xt-Ymb">
@@ -92,7 +98,7 @@
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HHN-N5-yht">
-                            <rect key="frame" x="14.333333333333343" y="14.333333333333343" width="302.33333333333326" height="279.33333333333326"/>
+                            <rect key="frame" x="14.333333333333343" y="14.333333333333329" width="302.33333333333326" height="151.33333333333337"/>
                             <color key="backgroundColor" red="0.49411764705882355" green="0.9882352941176471" blue="0.98039215686274506" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         </view>
                     </subviews>
@@ -119,10 +125,10 @@
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
-                <constraint firstItem="3TV-gc-UYZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="5Mc-CR-3dv"/>
+                <constraint firstItem="3TV-gc-UYZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" constant="64" id="5Mc-CR-3dv"/>
                 <constraint firstItem="3TV-gc-UYZ" firstAttribute="trailing" secondItem="iN0-l3-epB" secondAttribute="trailing" id="VUf-BY-180"/>
                 <constraint firstItem="3TV-gc-UYZ" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="vTL-uL-oGv"/>
-                <constraint firstAttribute="bottom" secondItem="3TV-gc-UYZ" secondAttribute="bottom" id="yfB-kW-Th2"/>
+                <constraint firstAttribute="bottom" secondItem="3TV-gc-UYZ" secondAttribute="bottom" constant="64" id="yfB-kW-Th2"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <point key="canvasLocation" x="92.36641221374046" y="-171.12676056338029"/>
