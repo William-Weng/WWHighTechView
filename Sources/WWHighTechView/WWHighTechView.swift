@@ -22,7 +22,6 @@ open class WWHighTechView: UIView {
     private let transform3DRotation = (start: CATransform3DMakeRotation(CGFloat.pi * 0.48, 0, 1, 0), end: CATransform3DMakeRotation(CGFloat.pi * 0.0, 0, 1, 0))
     
     private var duration: CFTimeInterval = 0.5
-    private var repeatFlashCount: Double = 2.0
     
     private var animationCount: (start: Int, end: Int) = (0, 0)
     private var animationKey: TransitionAnimationKeyPath?
@@ -60,21 +59,35 @@ public extension WWHighTechView {
     
     /// [啟動動畫功能](https://588ku.com/video/27048571.html)
     /// - Parameters:
-    ///   - duration: [總執行時間 - 3組動畫](https://chillcomponent.codlin.me/components/card-futuristic/)
+    ///   - totalDuration: [總執行時間 - 3組動畫](https://chillcomponent.codlin.me/components/card-futuristic/)
     ///   - innerView: 要加入的View
     ///   - repeatFlashCount: 閃動動畫執行的次數
     ///   - highTechColor: 主色調
-    func start(duration: CFTimeInterval = 1.5, innerView: UIView, repeatFlashCount: Double = 2.0, highTechColor: UIColor = UIColor(red: 126 / 255, green: 252 / 255, blue: 250, alpha: 1.0)) {
+    func start(totalDuration: CFTimeInterval = 1.5, innerView: UIView, repeatFlashCount: Float = 2.0, highTechColor: UIColor = UIColor(red: 126 / 255, green: 252 / 255, blue: 250, alpha: 1.0)) {
         
-        self.animationKey = .opacity
-        self.repeatFlashCount = repeatFlashCount
-        self.duration = duration / (Double(borderViews.count) + repeatFlashCount - 1.0)
+        reset()
         
+        duration = totalDuration / (Double(borderViews.count) + Double(repeatFlashCount) - 1.0)
         innerView._autolayout(on: containerView)
-        
         highTechColorSetting(highTechColor)
-        borderViews.forEach { $0.isHidden = false }
-        opacityAnimation(duration: self.duration)
+        
+        opacityAnimation(duration: self.duration, repeatFlashCount: repeatFlashCount)
+    }
+    
+    /// 等待中 (一直閃爍)
+    /// - Parameters:
+    ///   - duration: 執行時間
+    ///   - highTechColor: 主色調
+    func ready(duration: CFTimeInterval = 1.5, highTechColor: UIColor = UIColor(red: 126 / 255, green: 252 / 255, blue: 250, alpha: 1.0)) {
+        reset()
+        highTechColorSetting(highTechColor)
+        opacityAnimation(duration: self.duration, repeatFlashCount: .infinity)
+    }
+    
+    /// 回復初始狀態
+    func reset() {
+        animationKey = nil
+        initViewSetting()
     }
 }
 
@@ -102,16 +115,18 @@ private extension WWHighTechView {
     /// 初始化一些View的位置設定
     func initViewSetting() {
         containerView.isHidden = true
-        borderViews.forEach { $0.isHidden = true }
+        borderViews.forEach { $0.isHidden = true; $0.layer.removeAllAnimations() }
         fixTransformAnimation()
     }
     
     /// 透明度動畫
     /// - Parameter duration: CFTimeInterval
-    func opacityAnimation(duration: CFTimeInterval) {
+    func opacityAnimation(duration: CFTimeInterval, repeatFlashCount: Float) {
         
         let keyPath: TransitionAnimationKeyPath = .opacity
-        let animation = CAAnimation._basicAnimation(keyPath: keyPath, delegate: self, fromValue: 1.0, toValue: 0.0, duration: duration, repeatCount: Float(repeatFlashCount), isRemovedOnCompletion: true)
+        let animation = CAAnimation._basicAnimation(keyPath: keyPath, delegate: self, fromValue: 1.0, toValue: 0.0, duration: duration, repeatCount: repeatFlashCount, isRemovedOnCompletion: true)
+        
+        animationKey = keyPath
         
         containerView.isHidden = true
         borderViews.forEach { $0.layer.add(animation, forKey: keyPath.rawValue) }
@@ -125,6 +140,8 @@ private extension WWHighTechView {
         let keyPath: TransitionAnimationKeyPath = .transform
         let animation = CAAnimation._basicAnimation(keyPath: keyPath, delegate: self, fromValue: transform3DRotation.start, toValue: transform3DRotation.end, duration: duration)
         
+        animationKey = keyPath
+
         borderViews.forEach { $0.layer.add(animation, forKey: keyPath.rawValue) }
         distanceConstraints.forEach { $0.constant = contentView.bounds.height * 0.5 - (borderViews.first?.frame.height ?? 32.0) * 0.5 }
     }
@@ -178,8 +195,8 @@ private extension WWHighTechView {
             delegate?.highTechView(self, status: .end(animationKey))
             
             switch animationKey {
-            case .opacity: self.animationKey = .transform; transformAnimation(duration: duration);
-            case .transform: self.animationKey = .constraints; constraintAnimation(duration: duration)
+            case .opacity: transformAnimation(duration: duration);
+            case .transform: constraintAnimation(duration: duration)
             default: self.animationKey = nil
             }
             
@@ -187,11 +204,12 @@ private extension WWHighTechView {
         }
     }
     
-    /// 設定背景色
+    /// 設定背景色 + 顯示邊框
     /// - Parameter backgroundColor: UIColor
     func highTechColorSetting(_ backgroundColor: UIColor) {
         containerView.backgroundColor = backgroundColor
         borderSubViews.forEach { $0.backgroundColor = backgroundColor }
+        borderViews.forEach { $0.isHidden = false }
     }
     
     /// 設定兩個外框最接近的距離

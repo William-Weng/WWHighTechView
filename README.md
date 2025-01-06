@@ -11,7 +11,7 @@
 ### [Installation with Swift Package Manager](https://medium.com/彼得潘的-swift-ios-app-開發問題解答集/使用-spm-安裝第三方套件-xcode-11-新功能-2c4ffcf85b4b)
 ```bash
 dependencies: [
-    .package(url: "https://github.com/William-Weng/WWHighTechView.git", .upToNextMajor(from: "1.0.2"))
+    .package(url: "https://github.com/William-Weng/WWHighTechView.git", .upToNextMajor(from: "1.1.0"))
 ]
 ```
 
@@ -19,6 +19,8 @@ dependencies: [
 |函式|說明|
 |-|-|
 |start(duration:innerView:repeatFlashCount:highTechColor:)|啟動動畫功能|
+|ready(duration:highTechColor:)|等待中 (一直閃爍)|
+|reset()|回復初始狀態|
 
 ### [WWHighTechViewDelegate](https://ezgif.com/video-to-webp)
 |函式|說明|
